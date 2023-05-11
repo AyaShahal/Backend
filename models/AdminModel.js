@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 import validator from "validator";
-
+// admin schema
 const AdminSchema = new Schema(
     {
         username: {
