@@ -4,6 +4,7 @@ import morgan from "morgan";
 import connectDB from "./config/db.js";
 import bodyParser from "body-parser";
 import UserRouter from "./routes/UserRoute.js";
+import AdminRouter from  "./routes/AdminRoute.js"
 dotenv.config();
 
   
@@ -24,7 +25,7 @@ app.get("/", (req, res) => {
     res.send("API is running ...");
 });
 app.use("/api/user", UserRouter);
-
+app.use("/api/admin", AdminRouter);
 app.listen(
     PORT,
     console.log(
