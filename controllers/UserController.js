@@ -73,7 +73,6 @@ export const login = async (req, res, next) => {
                 id: user._id,
                 email: user.email,
                 token: token,
-                type: "user",
             },
         });
     } catch (error) {
