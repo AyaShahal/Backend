@@ -24,7 +24,15 @@ export const Register = async (req, res, next) => {
         email: req.body.email,
         password: hashedPassword,
         phone: req.body.phone,
-        Address: req.body.Address,
+        role: req.body.role,
+        Address: [
+            {
+                city: req.body.city,
+                building: req.body.building,
+                street: req.body.street
+            }
+        ]
+
     });
     try {
         await user.validate();
@@ -91,7 +99,14 @@ export const editUser = async (req, res) => {
                     username,
                     email,
                     phone,
-                    Address,
+                    Address: [
+                        {
+                            city,
+                            building,
+                            street,
+                        }
+                    ],
+            
                     password: hashedPassword,
                 },
             },
