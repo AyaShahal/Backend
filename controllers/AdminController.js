@@ -104,7 +104,7 @@ export const logOut = (req, res) => {
     res.clearCookie("jwt");
     return res.send("Log out successfully");
 };
-
+// edit
 export const edit = async (req, res, next) => {
     const { id } = req.params;
     
