@@ -19,17 +19,4 @@ const verifyToken = (req, res, next) => {
 
 export default verifyToken;
 
-// export const verifyAdmin = async (req, res, next) => {
-//     if (!req.admin) {
-//         return res.status(403).json({ message: "Not an Admin" });
-//     }
-//     req.admin = await Admin.findById(req.admin._id);
-//     next();
-// };
 
-// export const verifySuper = (req, res, next) => {
-//     if (!req.admin.isSuper) {
-//         return res.status(403).json({ message: "Not a Super Admin" });
-//     }
-//     next();
-// };
