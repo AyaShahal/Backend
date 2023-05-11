@@ -84,7 +84,7 @@ export const login = async (req, res, next) => {
 // edit user
 export const editUser = async (req, res) => {
     const { id } = req.params;
-    const { username, email, phone, Address, password } = req.body;
+    const { username, email, phone, city,building,street, password } = req.body;
     try {
         let hashedPassword;
         if (password) {
