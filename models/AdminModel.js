@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 import validator from "validator";
 
-const UserSchema = new Schema(
+const AdminSchema = new Schema(
     {
         username: {
-            type: String,
+            type: "string",
             required: [true, "Please enter an username"],
             unique: true,
         },
@@ -20,33 +20,11 @@ const UserSchema = new Schema(
             required: [true, "Please enter an Password"],
             minlength: [6, "Password must be at least 6 characters long"],
         },
-        phone: {
-            type: Number,
-            required: true,
-        },
-        Address: [{
-            city: {
-                type: String,
-                required: true,
-            },
-            street: {
-                type: String,
-                required: true,
-            },
-            building: {
-                type: String,
-                required: true,
-            }
-        }],
-     role:{
-        type: String,
-        enum: ["Business", "Organization"]
-     }
     },
     {
-        collection: "users",
+        collection: "admins",
         timestamps: true,
     }
 );
-const User = model("User", UserSchema);
-export default User;
+const Admin = model("Admin", AdminSchema);
+export default Admin;
