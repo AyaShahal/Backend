@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-// import Admin from "../models/AdminModel.js";
+import Admin from "../models/AdminModel.js";
 
 const verifyToken = (req, res, next) => {
     try {
@@ -18,5 +18,13 @@ const verifyToken = (req, res, next) => {
 };
 
 export default verifyToken;
+
+export const verifyAdmin = async (req, res, next) => {
+    if (!req.admin) {
+        return res.status(403).json({ message: "Not an Admin" });
+    }
+    req.admin = await Admin.findById(req.admin._id);
+    next();
+};
 
 
