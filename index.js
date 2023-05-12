@@ -4,7 +4,10 @@ import morgan from "morgan";
 import connectDB from "./config/db.js";
 import bodyParser from "body-parser";
 import UserRouter from "./routes/UserRoute.js";
-import AdminRouter from  "./routes/AdminRoute.js"
+import AdminRouter from  "./routes/AdminRoute.js";
+import CategoryRouter from "./routes/CategoryRoute.js";
+import FoodRouter from './routes/FoodRoute.js';
+import DonationRouter from "./routes/DonationRoute.js"
 dotenv.config();
 
   
@@ -26,6 +29,10 @@ app.get("/", (req, res) => {
 });
 app.use("/api/user", UserRouter);
 app.use("/api/admin", AdminRouter);
+app.use("/api/category", CategoryRouter);
+app.use("/api/Food", FoodRouter);
+app.use("/api/Donation", DonationRouter);
+app.use("/uploads", express.static("./uploads"));
 app.listen(
     PORT,
     console.log(
