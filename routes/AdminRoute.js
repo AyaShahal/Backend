@@ -7,8 +7,8 @@ router.get("/", verifyToken, verifyAdmin, controller.getAll);
 router.get("/:id", verifyToken, verifyAdmin, controller.get);
 router.post(
     "/register",
-    verifyToken,
-    verifyAdmin,
+    // verifyToken,
+    // verifyAdmin,
     controller.Register
 );
 router.post("/login", controller.login);
