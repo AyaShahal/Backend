@@ -25,7 +25,7 @@ export const Register = async (req, res, next) => {
         password: hashedPassword,
         phone: req.body.phone,
         role: req.body.role,
-        Address: [
+        address: [
             {
                 city: req.body.city,
                 building: req.body.building,
@@ -60,10 +60,11 @@ export const login = async (req, res, next) => {
             return res.status(400).json({ message: "Invalid password" });
         }
 
-        // Create and send JWT token
-        const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
-            expiresIn: "2h",
-        });
+        const token = jwt.sign(
+            { _id: user._id, role:user.role , type: "user"},
+            process.env.TOKEN_SECRET,
+            { expiresIn: "2h" }
+        );
         // res.cookie("jwt", token, {
         //     httpOnly: true,
         // });
@@ -73,6 +74,7 @@ export const login = async (req, res, next) => {
                 id: user._id,
                 email: user.email,
                 token: token,
+                role: user.role,
             },
         });
     } catch (error) {
