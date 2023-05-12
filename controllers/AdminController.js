@@ -79,7 +79,7 @@ export const login = async (req, res, next) => {
 
         // Create and send JWT token
         const token = jwt.sign(
-            { _id: admin._id, isSuper: admin.isSuper, type: "admin" },
+            { _id: admin._id, type: "admin" },
             process.env.TOKEN_SECRET,
             { expiresIn: "2h" }
         );
