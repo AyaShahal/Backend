@@ -35,7 +35,7 @@ export const addCategories = async (req, res, next) => {
         const form = new Model({
             name: req.body.name,
             description: req.body.description,
-            image: req.body.image,
+            // image: req.body.image,
             adminUsername: req.admin.username,
         });
 
@@ -66,12 +66,12 @@ export const updateCategories = async (req, res, next) => {
             category.name = name;
           }
       
-          if (image) {
-            if (category.image) {
-              fs.unlinkSync(`${category.image}`);
-            }
-            category.image = image;
-          }
+        //   if (image) {
+        //     if (category.image) {
+        //       fs.unlinkSync(`${category.image}`);
+        //     }
+        //     category.image = image;
+        //   }
       
           await category.save();
           res.json(category);
@@ -87,12 +87,12 @@ export const deleteCategories = async (req, res) => {
     let { id } = req.params;
     try {
         const category = await Model.findByIdAndDelete({ _id: id });
-        if (category !== null && category !== undefined) {
-            fs.unlinkSync(`${category.image}`, (err) => {
-                if (err) throw err;
-                console.log(`Successfully deleted image ${category.image}`);
-            });
-        }
+        // if (category !== null && category !== undefined) {
+        //     fs.unlinkSync(`${category.image}`, (err) => {
+        //         if (err) throw err;
+        //         console.log(`Successfully deleted image ${category.image}`);
+        //     });
+        // }
 
         res.status(200).json("category deleted successfully");
     } catch (error) {

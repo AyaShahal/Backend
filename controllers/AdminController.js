@@ -83,9 +83,9 @@ export const login = async (req, res, next) => {
             process.env.TOKEN_SECRET,
             { expiresIn: "2h" }
         );
-        res.cookie("jwt", token, {
-            httpOnly: true,
-        });
+        // res.cookie("jwt", token, {
+        //     httpOnly: true,
+        // });
         res.status(200).json({
             message: "User successfully logged in",
             admin: {

@@ -33,7 +33,7 @@ const UserSchema = new Schema(
         },
         street: {
           type: String,
-          required: true,
+        
         },
         building: {
           type: String,

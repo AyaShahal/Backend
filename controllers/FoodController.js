@@ -1,15 +1,86 @@
 import Food from "../models/ FoodModel.js"
 import fs from "fs";
+import mongoose from "mongoose";
 // Get all Foods
 const getAllFoods = async (req, res) => {
   try {
-    const Foods = await Food.find();
-    console.log(Foods);
-    res.json(Foods);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const count = await Food.countDocuments();
+    const totalPages = Math.ceil(count / limit);
+
+    const city = req.query.city;
+
+    const pipeline = [
+      {
+        $lookup: {
+          from: "Donations",
+          localField: "_id",
+          foreignField: "Food",
+          as: "donations",
+        },
+      },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "Category",
+          foreignField: "_id",
+          as: "Category",
+        },
+      },
+      {
+        $unwind: {
+          path: "$Category",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "User",
+          foreignField: "_id",
+          as: "User",
+        },
+      },
+      {
+        $unwind: {
+          path: "$User",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      
+      
+      {
+        $skip: skip,
+      },
+      {
+        $limit: limit,
+      },
+    ];
+
+    if (city) {
+      pipeline.push({
+        $match: {
+          "User.address.city": city,
+        },
+      });
+    }
+    
+
+    const products = await Food.aggregate(pipeline);
+
+    const result = {
+      totalPages: totalPages,
+      products,
+    };
+
+    res.status(200).json(result);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ status: 500, message: error.message });
   }
 };
+
 
 // Get Food by ID
 const getFoodById = async (req, res) => {
@@ -26,7 +97,7 @@ const getFoodById = async (req, res) => {
 
 // Add a new Food
 const addFood = async (req, res) => {
-  const { description, User, Category, image, expirydate, quantity } = req.body;
+  const { description, User, Category, image, expirydate, quantity ,name} = req.body;
   const newFood = new Food({
     description,
     Category,
@@ -34,6 +105,7 @@ const addFood = async (req, res) => {
     image,
     expirydate,
     quantity,
+    name
   });
 
   try {
@@ -52,18 +124,19 @@ const editFood = async (req, res) => {
       return res.status(404).json({ message: "Food not found" });
     }
 
-    // Update the description field if it exists in the request body
-    if (req.body.description) {
+    if (req.body.description !== undefined) {
       food.description = req.body.description;
     }
 
-    if (req.file) {
+    if (req.file && req.file.path) {
+      console.log("req.file:", req.file);
       if (food.image) {
         fs.unlinkSync(food.image);
       }
-
       food.image = req.file.path;
+      console.log("food.image:", food.image);
     }
+
 
     if (req.body.User) {
       food.User = req.body.User;
@@ -77,7 +150,9 @@ const editFood = async (req, res) => {
     if (req.body.quantity) {
       food.quantity = req.body.quantity;
     }
-
+    if (req.body.name) {
+      food.name = req.body.name;
+    }
     const updatedFood = await food.save();
     res.json(updatedFood);
   } catch (error) {

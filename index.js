@@ -7,9 +7,18 @@ import UserRouter from "./routes/UserRoute.js";
 import AdminRouter from  "./routes/AdminRoute.js";
 import CategoryRouter from "./routes/CategoryRoute.js";
 import FoodRouter from './routes/FoodRoute.js';
-import DonationRouter from "./routes/DonationRoute.js"
+import DonationRouter from "./routes/DonationRoute.js";
+import cors from "cors";
 dotenv.config();
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true, 
+    allowedHeaders: ['Content-Type', 'Authorization']
+  };
+  
+  
 
+  
   
 
   
@@ -17,6 +26,7 @@ await connectDB();
 const PORT = process.env.PORT || 6000;
 const app = express();
 app.use(express.json());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

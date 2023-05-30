@@ -9,10 +9,7 @@ const categorySchema = new Schema(
             unique: true,
         },
       
-        image: {
-            type: String,
-            required: true,
-        },
+      
         adminUsername: {
             type: String,
             required: true,

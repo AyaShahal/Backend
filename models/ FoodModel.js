@@ -3,6 +3,10 @@ const { Schema, model } = mongoose;
 
 const FoodSchema = new Schema(
   {
+    name:{
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: true,
@@ -17,7 +21,7 @@ const FoodSchema = new Schema(
     },
     image: {
       type: String,
-      required: true,
+      
     },
     Category: {
       type: Schema.Types.ObjectId,

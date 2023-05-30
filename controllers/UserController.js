@@ -14,7 +14,14 @@ const handleErrors = (err) => {
     }
     return errors;
 };
-
+export const getAll = async (req, res, next) => {
+    try {
+        const response = await Model.find({});
+        res.status(200).send({ success: true, response });
+    } catch (err) {
+        return next(err);
+    }
+};
 // register user
 export const Register = async (req, res, next) => {
     const saltRounds = 16;
@@ -75,6 +82,9 @@ export const login = async (req, res, next) => {
                 email: user.email,
                 token: token,
                 role: user.role,
+                username: user.username,
+                phone: user.phone,
+                address: user.address,
             },
         });
     } catch (error) {
@@ -155,6 +165,7 @@ const Controller = {
     logOut,
     editUser,
     deleteUser,
+    getAll
 };
 
 export default Controller;

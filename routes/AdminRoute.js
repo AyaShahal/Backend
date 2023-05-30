@@ -3,7 +3,7 @@ const router = express.Router();
 import controller from "../controllers/AdminController.js";
 import verifyToken, { verifyAdmin } from "../middleware/auth.js";
 
-router.get("/", verifyToken, verifyAdmin, controller.getAll);
+router.get("/", verifyToken, verifyAdmin,controller.getAll);
 router.get("/:id", verifyToken, verifyAdmin, controller.get);
 router.post(
     "/register",

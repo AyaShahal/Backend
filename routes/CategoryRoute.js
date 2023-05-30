@@ -10,14 +10,12 @@ router.post(
     "/",
     verifyToken,
     verifyAdmin,
-    imageHandle,
     Controller.addCategories
 );
 router.patch(
     "/:id",
     verifyToken,
     verifyAdmin,
-    imageHandle,
     Controller.updateCategories
 );
 router.delete("/:id", verifyToken, verifyAdmin, Controller.deleteCategories);
