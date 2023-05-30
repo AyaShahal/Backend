@@ -8,6 +8,7 @@ import AdminRouter from  "./routes/AdminRoute.js";
 import CategoryRouter from "./routes/CategoryRoute.js";
 import FoodRouter from './routes/FoodRoute.js';
 import DonationRouter from "./routes/DonationRoute.js";
+import ContactRouter from "./routes/ContactRoute.js";
 import cors from "cors";
 dotenv.config();
 const corsOptions = {
@@ -42,6 +43,7 @@ app.use("/api/admin", AdminRouter);
 app.use("/api/category", CategoryRouter);
 app.use("/api/Food", FoodRouter);
 app.use("/api/Donation", DonationRouter);
+app.use("/api/Contact", ContactRouter);
 app.use("/uploads", express.static("./uploads"));
 app.listen(
     PORT,
