@@ -47,7 +47,7 @@ export const addmessage = async (req, res, next) => {
             }
         });
     } catch (err) {
-        return next(err);
+        return res.status(400).send({error:err.message});
     }
 };
 
