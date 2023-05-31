@@ -11,12 +11,7 @@ import DonationRouter from "./routes/DonationRoute.js";
 import ContactRouter from "./routes/ContactRoute.js";
 import cors from "cors";
 dotenv.config();
-const corsOptions = {
-    origin: 'http://localhost:3000',
-    credentials: true, 
-    allowedHeaders: ['Content-Type', 'Authorization']
-  };
-  
+
   
 
   
