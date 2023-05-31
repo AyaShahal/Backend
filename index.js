@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
 import bodyParser from "body-parser";
+import cors from "cors"; 
 import UserRouter from "./routes/UserRoute.js";
 import AdminRouter from "./routes/AdminRoute.js";
 import CategoryRouter from "./routes/CategoryRoute.js";
@@ -23,6 +24,9 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
+
+app.use(cors());
+
 app.get("/", (req, res) => {
   res.send("API is running ...");
 });
@@ -35,5 +39,5 @@ app.use("/api/Contact", ContactRouter);
 app.use("/uploads", express.static("./uploads"));
 app.listen(
   PORT,
-  console.log(`Server runing in ${process.env.NODE_ENV} mode on port ${PORT}  `)
+  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
 );
