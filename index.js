@@ -16,6 +16,9 @@ dotenv.config();
 await connectDB();
 const PORT = process.env.PORT || 6000;
 const app = express();
+app.use(cors({
+    origin: 'https://surplussavior.onrender.com'
+}));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,9 +26,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-
-
-app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("API is running ...");
