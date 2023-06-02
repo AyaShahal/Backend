@@ -1,6 +1,8 @@
 import Food from "../models/ FoodModel.js"
 import fs from "fs";
 import mongoose from "mongoose";
+import { ObjectId } from 'mongoose';
+
 // Get all Foods
 const getAllFoods = async (req, res) => {
   try {
@@ -13,6 +15,7 @@ const getAllFoods = async (req, res) => {
     const city = req.query.city;
 
     const pipeline = [
+      
       {
         $lookup: {
           from: "Donations",
@@ -81,6 +84,19 @@ const getAllFoods = async (req, res) => {
   }
 };
 
+const getAllFoodsByUserId = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const foods = await Food.find({ "User._id": userId })
+      .populate("Category")
+      .populate("User");
+
+    res.status(200).json(foods);
+  } catch (error) {
+    res.status(500).json({ status: 500, message: error.message });
+  }
+};
 
 // Get Food by ID
 const getFoodById = async (req, res) => {
@@ -180,5 +196,6 @@ const FoodController = {
   addFood,
   editFood,
   deleteFood,
+  getAllFoodsByUserId
 };
 export default FoodController;
