@@ -17,8 +17,9 @@ await connectDB();
 const PORT = process.env.PORT || 6000;
 const app = express();
 app.use(cors({
-    origin: 'https://surplussavior.onrender.com'
+  origin: ['https://surplussavior.onrender.com', 'http://localhost:3000'],
 }));
+
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
