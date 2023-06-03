@@ -6,7 +6,8 @@ import imageHandle from "../middleware/imageHandle.js";
 const router = express.Router();
 
 router.get("/", FoodController.getAllFoods);
-router.get("/:id", FoodController.getAllFoodsByUserId);
+router.get("/user/:userId",FoodController.getAllFoodsByUserId);
+
 router.get("/:id", FoodController.getFoodById);
 
 router.post(

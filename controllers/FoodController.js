@@ -1,4 +1,4 @@
-import Food from "../models/ FoodModel.js"
+import Food from "../models/FoodModel.js";
 import fs from "fs";
 import mongoose from "mongoose";
 import { ObjectId } from 'mongoose';
@@ -83,20 +83,19 @@ const getAllFoods = async (req, res) => {
     res.status(500).json({ status: 500, message: error.message });
   }
 };
-
 const getAllFoodsByUserId = async (req, res) => {
   try {
     const userId = req.params.userId;
-
-    const foods = await Food.find({ "User._id": userId })
-      .populate("Category")
-      .populate("User");
+    const foods = await Food.find({ User: userId });
 
     res.status(200).json(foods);
   } catch (error) {
     res.status(500).json({ status: 500, message: error.message });
   }
 };
+
+
+
 
 // Get Food by ID
 const getFoodById = async (req, res) => {
