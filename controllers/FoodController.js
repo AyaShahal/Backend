@@ -86,13 +86,28 @@ const getAllFoods = async (req, res) => {
 const getAllFoodsByUserId = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const foods = await Food.find({ User: userId });
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
 
-    res.status(200).json(foods);
+    const count = await Food.countDocuments({ User: userId });
+    const totalPages = Math.ceil(count / limit);
+
+    const foods = await Food.find({ User: userId })
+      .skip(skip)
+      .limit(limit);
+
+    const result = {
+      totalPages: totalPages,
+      foods: foods,
+    };
+
+    res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ status: 500, message: error.message });
   }
 };
+
 
 
 
