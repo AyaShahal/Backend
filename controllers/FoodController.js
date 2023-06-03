@@ -131,7 +131,7 @@ const addFood = async (req, res) => {
   }
 };
 
-// Edit an Food
+// Edit a Food
 const editFood = async (req, res) => {
   try {
     const food = await Food.findById(req.params.id);
@@ -152,6 +152,11 @@ const editFood = async (req, res) => {
       console.log("food.image:", food.image);
     }
 
+    // Check if the image field exists in the request body
+    if (req.body.image === undefined) {
+      // If not provided, retain the existing image value
+      req.body.image = food.image;
+    }
 
     if (req.body.User) {
       food.User = req.body.User;
@@ -174,6 +179,7 @@ const editFood = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // Delete an Food
 const deleteFood = async (req, res) => {
